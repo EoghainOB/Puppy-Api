@@ -29,7 +29,11 @@ app.get('/api/puppies/:id', (req: Request<{id: number}>, res: Response<{}, {dog:
 });
 
 app.post('/api/puppies/', (req: Request, res: Response) : void => {
-  // const id: number = req.body.id;
+  if (dogs.some(index => index.id == req.body.id)) {
+    res
+    .send({ message: 'Error - Please enter unique id' });
+    return;
+  }
   try {
   const dog: dog = req.body
   dogs.push(dog);
@@ -44,6 +48,12 @@ app.post('/api/puppies/', (req: Request, res: Response) : void => {
 });
 
 app.put('/api/puppies/:id', (req: Request<{id: number}>, res: Response<{}, {updatedPuppy: dog}>) => {
+  if (dogs.some(index => index.id == req.params.id) === false) {
+    res
+    .status(400)
+    .send({ message: 'Error - Invalid id' });
+    return;
+  }
   try {
   const newData: dog = req.body;
   const id = req.params.id -1;
