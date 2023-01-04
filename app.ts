@@ -14,7 +14,6 @@ app.get('/api/puppies', (_req: Request, res: Response) => {
 app.get('/api/puppies/:id', (req: Request<{id: number}>, res: Response<{}, {dog: dog}>) => {
   if (dogs.some(index => index.id == req.params.id) === false) {
     res
-    .status(404)
     .send({ message: 'Error - Invalid id' });
     return;
   }
@@ -24,7 +23,9 @@ app.get('/api/puppies/:id', (req: Request<{id: number}>, res: Response<{}, {dog:
     .status(200)
     .send(dog);
   } catch (err) {
-    res.status(500).send({ message: err });
+    res
+    .status(400)
+    .send({ message: err });
   }
 });
 
@@ -43,7 +44,7 @@ app.post('/api/puppies/', (req: Request, res: Response) : void => {
   }
   catch (err) {
     res
-    .status(500)
+    .status(400)
   }
 });
 
@@ -67,14 +68,13 @@ app.put('/api/puppies/:id', (req: Request<{id: number}>, res: Response<{}, {upda
   }
   catch (err) {
     res
-    .status(500)
+    .status(400)
   }
 });
 
 app.delete('/api/puppies/:id', (req: Request<{id: number}>, res: Response) => {
   if (dogs.some(index => index.id == req.params.id) === false) {
     res
-    .status(404)
     .send({ message: 'Error - Invalid id' });
     return;
   }
@@ -87,7 +87,7 @@ app.delete('/api/puppies/:id', (req: Request<{id: number}>, res: Response) => {
     .sendStatus(200);
   } catch (err) {
     res
-    .status(404)
+    .status(400)
     .send('Error - Invalid id');
   }
 });
