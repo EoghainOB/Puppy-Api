@@ -2,12 +2,12 @@
   "name": "addons-ts-lab-puppiesapi",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.html",
   "scripts": {
     "compile": "tsc *.ts --outDir js",
     "compile:watch": "npm run compile -- --watch *.ts",
     "test": "jest --watchAll --silent",
-    "serve": "nodemon server.ts"
+    "server": "nodemon server.ts"
   },
   "repository": {
     "type": "git",

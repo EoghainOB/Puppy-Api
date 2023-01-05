@@ -1,4 +1,4 @@
-import express from 'express';
+import express = require('express');
 import { Request, Response, Application } from 'express';
 import { dogs } from './db';
 import { dog } from './types';
@@ -6,6 +6,10 @@ import { dog } from './types';
 const app: Application = express();
 
 app.use(express.json());
+
+app.get('/', (_req: Request, res: Response) => {
+  res.send('Express + Hello Server');
+});
 
 app.get('/api/puppies', (_req: Request, res: Response) => {
   res.send(dogs);
