@@ -2,10 +2,13 @@ import express = require('express');
 import { Request, Response, Application } from 'express';
 import { dogs } from './db';
 import { dog } from './types';
+const cors = require('cors');
 
 const app: Application = express();
 
 app.use(express.json());
+
+app.use(cors());
 
 app.get('/', (_req: Request, res: Response) => {
   res.send('Express + Hello Server');
@@ -84,10 +87,11 @@ app.delete('/api/puppies/:id', (req: Request<{id: number}>, res: Response) => {
   }
   try {
   const dogDel = dogs.findIndex(({ id }) => id == req.params.id);
-    if (dogDel) {
-      dogs.splice(dogDel, 1);
+    if (dogDel >= 0) {
+    dogs.splice(dogDel, 1);
     }
   res
+    .json(dogs)
     .sendStatus(200);
   } catch (err) {
     res
